@@ -1,6 +1,6 @@
 import cv2
 import numpy as np
-# Load Yolo
+# Yolo
 net = cv2.dnn.readNet("yolov3.weights", "yolov3.cfg")
 classes = []
 with open("coco.names", "r") as f:
@@ -9,19 +9,19 @@ layer_names = net.getLayerNames()
 output_layers = [layer_names[i - 1] for i in net.getUnconnectedOutLayers()]
 colors = np.random.uniform(0, 255, size=(len(classes), 3))
 
-# Loading web cam
+# conectar a web cam
 camera = cv2.VideoCapture(0)
 
 while True:
     _,img = camera.read()
     height, width, channels = img.shape
 
-    # Detecting objects
+    # detecção de objetos
     blob = cv2.dnn.blobFromImage(img, 0.00392, (320, 320), (0, 0, 0), True, crop=False)
     net.setInput(blob)
     outs = net.forward(output_layers)
 
-    # Showing informations on the screen
+    # mostrar as informações na tela 
     class_ids = []
     confidences = []
     boxes = []
